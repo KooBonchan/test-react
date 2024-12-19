@@ -1,18 +1,15 @@
-import { useReducer } from 'react'
-import './App.css'
+import './App.css';
+import { Body } from './component/Body';
+import { Header } from './component/Header';
+import { Footer } from './component/Footer';
 
 function App() {
-  const [count, dispatch] = useReducer(e=>e+1, 0);
-
   return (
-    <>
-      <h1>Hello</h1>
-      <div className="card">
-        <button onClick={dispatch}>
-          count is {count}
-        </button>        
-      </div>
-    </>
+    <div className='App'>
+      <Header />
+      <Body />
+      <Footer />
+    </div>
   )
 }
 
