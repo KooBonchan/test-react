@@ -1,0 +1,8 @@
+.button-bar {
+  margin: 0.5rem;
+  display:flex;
+  justify-content:center;
+  max-width: 100%;
+  gap:0.5rem;
+  flex-wrap: nowrap;
+}
