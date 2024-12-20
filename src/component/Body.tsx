@@ -11,9 +11,9 @@ import { Counter } from './page/Counter';
 
 export function Body() {
   const baseDocument: Document = {
-    title: 'Lorem Ipsum',
+    title: 'Anonymous Vocal',
     category: 'vocal',
-    description: 'Victorum. Quod autem in homine praestantissimum atque optimum est, id deseruit. Quod quidem nobis non saepe contingit.',
+    description: 'Tell me who is your best musician.',
   };
   const [document, setDocument] = useState<Document>(baseDocument);
   const user: Person = {name: 'John', location: 'USA',
@@ -24,8 +24,8 @@ export function Body() {
       'Dingwall','Sandberg','Modulus','Lakland','Charvel',
     ],
   };
-  
   const [page, setPage] = useState(4);
+  
   return (
     <div className="body">
       <div className='nav'>
@@ -40,8 +40,11 @@ export function Body() {
           </button>
         ))}
       </div>
-      {page === 0 && <DocumentViewer counter={157} document={document} person={user} />}
-      {page === 1 && <DocumentWriter onCommit={setDocument}/>}
+      {page === 0 && <DocumentViewer document={document} person={user} />}
+      {page === 1 && <DocumentWriter onCommit={(document:Document) => {
+        setPage(0);
+        setDocument(document);
+      }}/>}
       {page === 2 && <Calculator />}
       {page === 3 && <Greet />}
       {page === 4 && <Counter />}

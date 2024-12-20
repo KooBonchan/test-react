@@ -1,0 +1,14 @@
+.document-card{
+  border: 1px dashed darkkhaki;
+  color: khaki;
+  margin: 1rem;
+}
+.document-card .title{
+  font-size:1.5em;
+  font-weight:bold;
+  margin-top:0.5rem;
+}
+.document-card .category{
+  color: darkkhaki;
+  font-size:0.8em;
+}

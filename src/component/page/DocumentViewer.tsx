@@ -1,13 +1,14 @@
 import { styled } from 'styled-components';
 import { Document } from '../../model/Document';
 import Person from '../../model/Person';
+import './DocumentViewer.css';
 
-function Card({title, category, description}: Document) {
+function DocumentCard({title, category, description}: Document) {
   return (
-    <div className="card">
-      <strong>{title}</strong>
-      <span style={{fontSize:'0.8em'}}>{category}</span>
-      <p>{description}</p>
+    <div className="document-card">
+      <div className='title'>{title}</div>
+      <div className='category'>{category.toUpperCase()}</div>
+      <p className='description'>{description}</p>
     </div>
   );
 }
@@ -21,8 +22,8 @@ function PersonInfo({person}: {person:Person}){
   const {name, location, favorList = []} = person;
   return (
     <>
-    <p>{name} Lives in {location}</p>
-    <h2>Favorites</h2>
+    <h2>{name} Lives in {location}</h2>
+    <h3>Favorites</h3>
     <ul className="item-list">
       {favorList.map((item, index) => 
         <BorderedItem key={"item"+index}>{item}</BorderedItem>
@@ -33,13 +34,11 @@ function PersonInfo({person}: {person:Person}){
 }
 
 export function DocumentViewer(
-  { counter, document: doc, person }: { counter?: number; document?: Document; person: Person; }) {
+  { document: doc, person }: { document?: Document; person: Person; }) {
 
   return (
     <>
-      <h2>BODY {counter}</h2>
-      {counter && <h3>Parity: {counter % 2 === 0 ? 'even' : 'odd'}</h3>}
-      {doc && <Card {...doc} />}
+      {doc && <DocumentCard {...doc} />}
 
       <PersonInfo person={person} />
     </>
