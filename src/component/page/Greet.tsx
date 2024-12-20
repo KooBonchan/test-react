@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Greet() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
+  const textRef = useRef<HTMLInputElement | null>(null);
   
+  useEffect(()=>{
+    if(text.length > 0){
+      console.log(text);
+    }
+  }, [text])
+
   function handleClick() {
-    alert(text);
-    
+    textRef.current?.focus();
+    textRef.current?.setAttribute('value', '');
+    setText(textRef.current?.value || '');
   }
 
   return (
     <>
       <input
-        value={text}
-        onChange={(e) => {setText(e.target.value);}}
+        ref={textRef}
         autoFocus />
       <button type="button" onClick={handleClick} >Click!</button>
     </>
