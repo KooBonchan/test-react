@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Todo from "../../../model/Todo";
 import { FormInput } from "./component/InputComponent";
 import { useState } from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 
 const Item = styled.div`
   display: grid;
@@ -45,17 +46,24 @@ export function TodoList(
   const [query, setQuery] = useState<string>('');
   return (
     <div style={{margin:'1rem auto'}}>
-      <form onSubmit={(e)=>{
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        setQuery(form['search-query'].value.toLowerCase());
-      }}>
+      <form 
+          onSubmit={(e)=>{
+            e.preventDefault();
+            const form = e.target as HTMLFormElement;
+            setQuery(form['search-query'].value.toLowerCase());
+          }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "3fr 1fr 1fr",
+            gap:"0.1em",
+            margin: "0 1em",
+          }}>
         <FormInput
           name="search-query"
           placeholder="Search..."
           defaultValue={query}
         ></FormInput>
-        <button>♣ search</button>
+        <button><FaMagnifyingGlass /></button>
         <button type="reset" onClick={()=>{setQuery('');}}>
           reset
         </button>
@@ -63,10 +71,10 @@ export function TodoList(
       {!items.length && <div>NO Contents Yet</div>}
       {items
       .filter((todo) => todo.content.toLowerCase().includes(query))
-      .map((item, idx) =>(
-        <TodoItem key={'todo'+idx} item={item}
-          onDelete={()=>onDelete(idx)}
-          onDoneToggle={()=>onDoneToggle(idx)}/>
+      .map((item) =>(
+        <TodoItem key={item.id} item={item}
+          onDelete={()=>onDelete(item.id)}
+          onDoneToggle={()=>onDoneToggle(item.id)}/>
       ))}
     </div>
   );

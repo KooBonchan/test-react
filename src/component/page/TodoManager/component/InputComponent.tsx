@@ -11,5 +11,4 @@ export const FormInput = styled.input`
   }
 
   font-size: 1.2rem;
-  width: 50vw;
 `;
