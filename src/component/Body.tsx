@@ -5,7 +5,7 @@ import { Calculator } from './page/Calculator';
 import { useState } from 'react';
 import { DocumentViewer } from './page/DocumentViewer';
 import { DocumentWriter } from './page/DocumentWriter';
-import { TodoManager } from './page/Greet';
+import { TodoManager } from './page/TodoManager';
 import { Counter } from './page/Counter';
 
 
@@ -24,7 +24,7 @@ export function Body() {
       'Dingwall','Sandberg','Modulus','Lakland','Charvel',
     ],
   };
-  const [page, setPage] = useState(4);
+  const [page, setPage] = useState(3);
   
   return (
     <div className="body">
@@ -33,6 +33,8 @@ export function Body() {
           <button 
             key={'tab'+index}
             type="button"
+            disabled = {page == index}
+            aria-selected = {page == index}
             onClick={()=> {
               if(page != index) setPage(index)
             }}>
