@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Todo from "../../../model/Todo";
 import { FormInput } from "./component/InputComponent";
+import { TodoContext } from "./TodoWrapper";
+import { useContext } from "react";
 
 
 const Label = styled.div`
@@ -8,7 +10,9 @@ const Label = styled.div`
   margin-top: 1rem;
 `;
 
-export function TodoWriter({onCommit}:{onCommit: (t:Todo) => void}) {
+export function TodoWriter() {
+  const context = useContext(TodoContext);
+  if(!context) throw new Error("Project Structure error: Todo Writer should be in Todo Wrapper");
   return (
     <>
       <Label>Write new TODO</Label>
@@ -25,7 +29,7 @@ export function TodoWriter({onCommit}:{onCommit: (t:Todo) => void}) {
           content: content.value,
           regDate: new Date(),
         };
-        onCommit(data);
+        context.handleCommit(data);
         form.reset();
       }}
       >

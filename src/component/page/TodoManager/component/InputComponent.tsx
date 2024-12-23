@@ -8,6 +8,8 @@ export const FormInput = styled.input`
   color:inherit;
   &::placeholder{
     color: khaki;
+    opacity: 0.3;
+    font-family: 'Kode mono', Consolas, monospace;
   }
 
   font-size: 1.2rem;

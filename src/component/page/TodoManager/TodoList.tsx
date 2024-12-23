@@ -1,8 +1,9 @@
+import { memo, useContext, useState } from "react";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 import styled from "styled-components";
 import Todo from "../../../model/Todo";
 import { FormInput } from "./component/InputComponent";
-import { useState } from "react";
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { TodoContext } from "./TodoWrapper";
 
 const Item = styled.div`
   display: grid;
@@ -18,31 +19,44 @@ const DateString = styled.span`
   font-size: 0.8em;
   opacity: 0.6;
 `;
-function TodoItem(
-  {item, onDelete, onDoneToggle}:
-  {item: Todo, onDelete: ()=>void, onDoneToggle: ()=>void}
+const TodoItem = memo(function(
+  {item}:{item: Todo}
 ) {
-  
+  const context = useContext(TodoContext);
   const {content, regDate, done=false} = item;
   
   return (
     <Item>
-      <input type="checkbox" onChange={onDoneToggle} checked={done}/>
+      <input type="checkbox" onChange={()=>context?.handleDoneToggle(item.id)} checked={done}/>
       <TitleString>{content}</TitleString>
       <DateString>{regDate.toLocaleDateString()}</DateString>
       <button type="button" className="delete"
-        onClick={onDelete}>
+        onClick={()=>context?.handleDelete(item.id)}>
         delete
       </button>
     </Item>
   );
+});
+
+
+function TodoStatistics(){
+  const todo = useContext(TodoContext)?.items ?? [];
+  const totalCount = todo.length;
+  const doneCount = todo.filter(todo=>todo.done).length;
+  
+  return (
+    <div style={{display:'flex', gap:'1.5em', justifyContent:'center'}}>
+      <span>Total: {totalCount}
+      </span>
+      <span>Done: {doneCount}</span>
+      <span>Left: {totalCount - doneCount}</span>
+    </div>
+  );
 }
 
 
-export function TodoList(
-  {items, onDelete, onDoneToggle}:
-  {items:Todo[], onDelete:(idx:number)=>void, onDoneToggle:(idx:number)=>void}
-) {
+export function TodoList() {
+  const context = useContext(TodoContext);
   const [query, setQuery] = useState<string>('');
   return (
     <div style={{margin:'1rem auto'}}>
@@ -68,13 +82,12 @@ export function TodoList(
           reset
         </button>
       </form>
-      {!items.length && <div>NO Contents Yet</div>}
-      {items
+      <TodoStatistics />
+      {!context?.items.length && <div>NO Contents Yet</div>}
+      {context?.items
       .filter((todo) => todo.content.toLowerCase().includes(query))
       .map((item) =>(
-        <TodoItem key={item.id} item={item}
-          onDelete={()=>onDelete(item.id)}
-          onDoneToggle={()=>onDoneToggle(item.id)}/>
+        <TodoItem key={item.id} item={item}/>
       ))}
     </div>
   );
