@@ -5,7 +5,7 @@ import { Calculator } from './page/Calculator';
 import { useState } from 'react';
 import { DocumentViewer } from './page/DocumentViewer';
 import { DocumentWriter } from './page/DocumentWriter';
-import { Greet } from './page/Greet';
+import { TodoManager } from './page/Greet';
 import { Counter } from './page/Counter';
 
 
@@ -29,7 +29,7 @@ export function Body() {
   return (
     <div className="body">
       <div className='nav'>
-        {['View', 'Write', 'Calc', 'Greet', 'Count'].map((tabName, index) => (
+        {['View', 'Write', 'Calc', 'Todos', 'Count'].map((tabName, index) => (
           <button 
             key={'tab'+index}
             type="button"
@@ -46,7 +46,7 @@ export function Body() {
         setDocument(document);
       }}/>}
       {page === 2 && <Calculator />}
-      {page === 3 && <Greet />}
+      {page === 3 && <TodoManager />}
       {page === 4 && <Counter />}
     </div>
   );
