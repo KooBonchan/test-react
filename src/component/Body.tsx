@@ -1,12 +1,12 @@
-import './Body.css';
+import { useState } from 'react';
 import { Document } from '../model/Document';
 import Person from '../model/Person';
+import './Body.css';
 import { Calculator } from './page/Calculator';
-import { useState } from 'react';
+import { CounterPage } from './page/Counter';
 import { DocumentViewer } from './page/DocumentViewer';
 import { DocumentWriter } from './page/DocumentWriter';
 import { TodoManager } from './page/TodoManager';
-import { Counter } from './page/Counter/Counter';
 
 
 export function Body() {
@@ -49,7 +49,7 @@ export function Body() {
       }}/>}
       {page === 2 && <Calculator />}
       {page === 3 && <TodoManager />}
-      {page === 4 && <Counter />}
+      {page === 4 && <CounterPage />}
     </div>
   );
 }

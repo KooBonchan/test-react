@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import './Counter.css';
-import TestComp from "./TestComp";
 
 function Even(){
   useEffect(() => {
@@ -9,7 +8,7 @@ function Even(){
   return <div style={{fontSize:'0.7rem'}}>Quite Even</div>
 }
 
-export function Counter() {
+export function MultiCounter() {
   const [count, setCount] = useState(0);
   const didMount = useRef(false);
   useEffect(() => {
@@ -27,8 +26,6 @@ export function Counter() {
   const plusModifiers = [1, 10, 100, 500,];
   return (
     <>
-    <TestComp />
-
     <div style={{
       padding:'2rem',
       maxWidth: '100%',
