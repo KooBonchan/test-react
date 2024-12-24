@@ -20,7 +20,7 @@ export function Body() {
       </div>
       <Routes>
       {routes.map(({route, element})=>(
-        <Route path={route + '/*'} element={element}/>
+        <Route key={'route_'+route} path={route + '/*'} element={element}/>
       ))}
       </Routes>
     </div>
