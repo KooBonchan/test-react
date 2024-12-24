@@ -58,7 +58,7 @@ export function TodoWrapper() {
           items: todos,
           handleCommit: (todo) => dispatch({
               command: TodoActionCommand.CREATE,
-              payload: todo,
+              payload: {...todo, id:Date.now()},
             }),
           handleDelete: (todo) => dispatch({
             command: TodoActionCommand.DELETE,
