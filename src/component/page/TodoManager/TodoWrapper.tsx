@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useCallback, useMemo, useReducer } from "react";
 import Todo from "../../../model/Todo";
 import { TodoContextType } from '../../../model/TodoContextType';
 import { TodoList } from "./TodoList";
@@ -51,24 +51,29 @@ const todoReducer = (state: Todo[], action: TodoAction): Todo[] => {
 
 export function TodoWrapper() {
   const [todos, dispatch] = useReducer(todoReducer, placeholderTodos);
+  const handleCommit = useCallback((todo: Todo) => dispatch({
+    command: TodoActionCommand.CREATE,
+    payload: {...todo, id:Date.now()},
+  }), [dispatch]);
+  const handleDelete = useCallback((todo:Todo) => dispatch({
+    command: TodoActionCommand.DELETE,
+    payload: todo,
+  }), [dispatch]);
+  const handleDoneToggle = useCallback((todo:Todo) => dispatch({
+    command: TodoActionCommand.DONE_TOGGLE,
+    payload: todo,
+  }), [dispatch]);
+
+  const context:TodoContextType = useMemo(()=>({
+    items: todos,
+    handleCommit: handleCommit,
+    handleDelete: handleDelete,
+    handleDoneToggle: handleDoneToggle,
+  }), [todos, handleCommit, handleDelete, handleDoneToggle]);
   
   return (
     <>
-      <TodoContext.Provider value={{
-          items: todos,
-          handleCommit: (todo) => dispatch({
-              command: TodoActionCommand.CREATE,
-              payload: {...todo, id:Date.now()},
-            }),
-          handleDelete: (todo) => dispatch({
-            command: TodoActionCommand.DELETE,
-            payload: todo,
-          }),
-          handleDoneToggle: (todo) => dispatch({
-            command: TodoActionCommand.DONE_TOGGLE,
-            payload: todo,
-          }),
-        }}>
+      <TodoContext.Provider value={context}>
         <TodoWriter />
         <TodoList />
       </TodoContext.Provider>
