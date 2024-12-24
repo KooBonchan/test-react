@@ -1,10 +1,10 @@
-import { createContext, useCallback, useMemo, useReducer } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import Todo from "../../../model/Todo";
 import { TodoContextType } from '../../../model/TodoContextType';
+import { TodoContext } from "./TodoContext";
 import { TodoList } from "./TodoList";
 import { TodoWriter } from "./TodoWriter";
 
-export const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
 const placeholderTodos = [
   {

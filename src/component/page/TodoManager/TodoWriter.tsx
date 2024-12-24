@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Todo from "../../../model/Todo";
 import { FormInput } from "./component/InputComponent";
-import { TodoContext } from "./TodoWrapper";
 import { useCallback, useContext } from "react";
+import { TodoContext } from "./TodoContext";
 
 
 const Label = styled.div`

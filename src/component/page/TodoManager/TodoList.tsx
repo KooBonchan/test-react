@@ -3,7 +3,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import styled from "styled-components";
 import Todo from "../../../model/Todo";
 import { FormInput } from "./component/InputComponent";
-import { TodoContext } from "./TodoWrapper";
+import { TodoContext } from "./TodoContext";
 
 const Item = styled.div`
   display: grid;
@@ -78,6 +78,7 @@ export function TodoList() {
   const context = useContext(TodoContext);
   const [query, setQuery] = useState<string>('');
   const search = useCallback((e: React.FormEvent)=> {
+    e.preventDefault();
     const form = e.target as HTMLFormElement;
     setQuery(form['search-query'].value.toLowerCase());
   }, []);
@@ -105,11 +106,12 @@ export function TodoList() {
       {!context?.items.length &&
         <NoContentMessage>NO Contents Yet</NoContentMessage>
       }
-      {filteredTodos.length > 0 &&
+      {filteredTodos.length > 0 ?
       filteredTodos
       .map((item) =>(
         <TodoItem key={item.id} item={item}/>
-      ))}
+      )) :
+      <NoContentMessage>NO Search result</NoContentMessage>}
     </TodoListWrapper>
   );
 }
