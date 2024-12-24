@@ -1,4 +1,4 @@
-import { Document, DocumentCategory, verifyDocument } from '../../model/Document';
+import { Document, DocumentCategory, verifyDocument } from '../../../model/Document';
 
 
 

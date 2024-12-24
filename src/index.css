@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Almendra:ital,wght@0,400;0,700;1,400;1,700&family=Kode+Mono:wght@400..700&display=swap');
 
 :root {
   font-family: "Kode Mono", Helvetica, Arial, sans-serif;
@@ -67,4 +67,29 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+.almendra-regular {
+  font-family: "Almendra", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.almendra-bold {
+  font-family: "Almendra", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.almendra-regular-italic {
+  font-family: "Almendra", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.almendra-bold-italic {
+  font-family: "Almendra", serif;
+  font-weight: 700;
+  font-style: italic;
 }

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
-export function withLifecycleLogger(WrappedComponent){
+export function withLifecycleLogger(
+  WrappedComponent: (props)=>JSX.Element){
   return (props) => {
     useEffect(() => {
       console.log("mount");
