@@ -50,7 +50,7 @@ export function Calculator() {
           return {peek:'number', value: state.value + action.value};
         }
         else if(state.peek === 'zero'){
-          if(action.value in ['0', '00']){
+          if(action.value === '0' || action.value === '00'){
             return state;
           }
           else if(action.value === '.'){
