@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { DocumentViewer } from './page/DocumentViewer';
 import { DocumentWriter } from './page/DocumentWriter';
 import { TodoManager } from './page/TodoManager';
-import { Counter } from './page/Counter';
+import { Counter } from './page/Counter/Counter';
 
 
 export function Body() {

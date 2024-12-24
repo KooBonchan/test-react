@@ -1,6 +1,6 @@
-import { createContext, useCallback, useState } from "react";
+import { createContext, useReducer } from "react";
 import Todo from "../../../model/Todo";
-import { TodoContextType } from "../../../model/TodoContextType";
+import { TodoContextType } from '../../../model/TodoContextType';
 import { TodoList } from "./TodoList";
 import { TodoWriter } from "./TodoWriter";
 
@@ -24,30 +24,51 @@ const placeholderTodos = [
   },
 ];
 
-export function TodoWrapper() {
-  const [todos, setTodos] = useState<Todo[]>(placeholderTodos);
 
-  const handleCommit = useCallback((todo:Todo)=>{
-    setTodos( prevItems => {
-      const nextTodo = {...todo, id:Date.now()};
-      return [nextTodo, ...prevItems]
-    })
-  }, []);
-  const handleDelete = useCallback((id:number)=>{
-    setTodos(prevItems => prevItems.filter((todo)=>(todo.id!==id)))
-  }, []);
-  const handleDoneToggle = useCallback((id:number) => {
-    setTodos(prevItems => prevItems.map((todo) => {
-      if(todo.id == id) {
-        return {...todo, done: !(todo.done ?? false)}
-      };
-      return todo;
-    }))
-  }, [])
+enum TodoActionCommand {
+  CREATE, DONE_TOGGLE, DELETE
+}
+interface TodoAction {
+  command: TodoActionCommand;
+  payload: Todo;
+}
+const todoReducer = (state: Todo[], action: TodoAction): Todo[] => {
+  switch(action.command){
+    case TodoActionCommand.CREATE:
+      return [action.payload, ...state];
+    case TodoActionCommand.DONE_TOGGLE:
+      return state.map((todo) => {
+        if(todo.id === action.payload.id){
+          return {...todo, done: !(todo.done ?? false)}
+        }
+        return todo;
+      });
+    case TodoActionCommand.DELETE:
+      return state.filter((todo) =>
+        (todo.id !== action.payload.id));
+  }
+}
+
+export function TodoWrapper() {
+  const [todos, dispatch] = useReducer(todoReducer, placeholderTodos);
   
   return (
     <>
-      <TodoContext.Provider value={{items: todos, handleCommit, handleDelete, handleDoneToggle}}>
+      <TodoContext.Provider value={{
+          items: todos,
+          handleCommit: (todo) => dispatch({
+              command: TodoActionCommand.CREATE,
+              payload: todo,
+            }),
+          handleDelete: (todo) => dispatch({
+            command: TodoActionCommand.DELETE,
+            payload: todo,
+          }),
+          handleDoneToggle: (todo) => dispatch({
+            command: TodoActionCommand.DONE_TOGGLE,
+            payload: todo,
+          }),
+        }}>
         <TodoWriter />
         <TodoList />
       </TodoContext.Provider>

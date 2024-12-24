@@ -27,11 +27,11 @@ const TodoItem = memo(function(
   
   return (
     <Item>
-      <input type="checkbox" onChange={()=>context?.handleDoneToggle(item.id)} checked={done}/>
+      <input type="checkbox" onChange={()=>context?.handleDoneToggle(item)} checked={done}/>
       <TitleString>{content}</TitleString>
       <DateString>{regDate.toLocaleDateString()}</DateString>
       <button type="button" className="delete"
-        onClick={()=>context?.handleDelete(item.id)}>
+        onClick={()=>context?.handleDelete(item)}>
         delete
       </button>
     </Item>
