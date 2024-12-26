@@ -1,12 +1,17 @@
 import { useParams } from "react-router-dom";
+import { Editor } from "./layout/Editor";
 
 export function DiaryEdit() {
-  const {id:id} = useParams();
+  const {id:rawId} = useParams();
+  if(!rawId) throw new Error("Should not be routed to Diary View");
+  const id = Number(rawId);
+  
+  if(isNaN(id)) return <div>INVALID ACCESS</div>
   return (
     <>
-      <div>id: {id && parseInt(id!)}</div>
-      <h3>ITEM EDIT</h3>
-      <p>consolas</p>
+      <Editor title="title">
+
+      </Editor>
     </>
   );
 }
