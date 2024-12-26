@@ -14,12 +14,10 @@ const ListItem = styled.div`
 `;
 const Title = styled.div`
   text-align: left;
-  padding: 0 1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
 export function DiaryListItem(
   {diary: {id, emotion, title, regDate}}: {diary: Diary}
 ) {

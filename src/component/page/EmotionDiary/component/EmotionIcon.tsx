@@ -1,12 +1,12 @@
-import { Emotion } from "../../../../model/Diary";
+import { EmotionCode } from "../../../../model/Diary";
 function emotionIconNameMapper
-  (emotion: Emotion): string
+  (emotion: EmotionCode): string
 {
   return emotion.toString() + '.png';
 }
 export function EmotionIcon(
   { emotion, width=40 }:
-  { emotion: Emotion; width?:number }
+  { emotion: EmotionCode; width?:number }
 ) {
   emotion.toString();
   const emotionString = emotionIconNameMapper(emotion);

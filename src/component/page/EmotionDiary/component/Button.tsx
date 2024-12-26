@@ -10,6 +10,9 @@ export const Button = styled.button`
   border: 1px solid darkkhaki;
   border-radius: 0.3rem;
 
+  white-space: nowrap;
+  overflow: visible;
+
   &.primary {
     color: #242424;
     background-color: darkkhaki;

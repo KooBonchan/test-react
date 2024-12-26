@@ -16,7 +16,7 @@ export function DiaryView() {
         leftChild={
           <Button
             onClick={()=>navigate('/diary')}>
-              list
+              List
           </Button>
         }
         rightChild={

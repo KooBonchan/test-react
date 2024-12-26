@@ -9,7 +9,8 @@ export function DiaryEdit() {
   if(isNaN(id)) return <div>INVALID ACCESS</div>
   return (
     <>
-      <Editor title="title">
+      <Editor
+        headerTitle="title">
 
       </Editor>
     </>
