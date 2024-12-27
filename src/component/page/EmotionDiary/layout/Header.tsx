@@ -13,7 +13,7 @@ const Title = styled.span`
   white-space: nowrap;
   text-transform: uppercase;
   font-family: 'Kode mono';
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight:bold;
 `;
 

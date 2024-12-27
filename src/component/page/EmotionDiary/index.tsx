@@ -8,8 +8,13 @@ import { useCallback, useMemo, useReducer } from 'react';
 import { Diary, EmotionCode } from '../../../model/Diary';
 import { DiaryDispatchContext, DiaryStateContext } from './context/DiaryContext';
 
+function idGenerator():number {
+  //change to UUID sometime.
+  return Date.now();
+}
+
 const placeholderDiary:Diary = {
-  id: -1,
+  id: 1,
   emotion: EmotionCode.UP,
   title: "PLACEHOLDER",
   content: "sample",
@@ -25,7 +30,8 @@ interface DiaryAction {
 const reducer = (state:Diary[], action:DiaryAction): Diary[] => {
   switch(action.command){
     case 'create':
-      return [...state, placeholderDiary];
+      if(!action.payload) return state;
+      return [...state, action.payload];
     case 'delete':
       return state.filter((e)=> e.id && e.id != action.id );
     case 'update':
@@ -43,8 +49,7 @@ export function EmotionDiary(){
   const handleCreate = useCallback((payload:Diary) => {
     dispatch({
       command: 'create',
-      id: Date.now(),
-      payload: payload,
+      payload: {...payload, id:idGenerator() },
     })
   }, []);
   const handleDelete = useCallback((id: number) => {
@@ -55,7 +60,7 @@ export function EmotionDiary(){
   }, []);
   const handleUpdate = useCallback((payload:Diary) =>{
     dispatch({
-      command: 'create',
+      command: 'update',
       id: payload.id,
       payload: payload,
     })

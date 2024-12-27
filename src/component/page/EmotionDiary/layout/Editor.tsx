@@ -1,23 +1,10 @@
+import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { Diary, Emotion, EmotionCode, emotionMetadata } from "../../../../model/Diary";
 import { Button } from "../component/Button";
+import { DiaryDispatchContext } from '../context/DiaryContext';
 import { Header } from "./Header";
-import styled from "styled-components";
-import { useState } from "react";
-
-const Content = styled.textarea`
-  resize: none;
-  font-family: inherit;
-  color:inherit;
-  background: none;
-  border: 1px solid khaki;
-  margin:1rem;
-  padding: 5px;
-  width:300px;
-  height:100px;
-  font-size: 1.2rem;
-  
-`;
 
 const EmotionButtonWrapper = styled.div`
   box-sizing: border-box;
@@ -38,7 +25,6 @@ const EmotionButtonWrapper = styled.div`
 const EmotionButtonLabel = styled.div`
   font-size: 1.2em;
 `;
-
 function EmotionButton (
   {emotion:{filename,name}}:
   {emotion: Emotion}){
@@ -80,15 +66,64 @@ function EmotionSelector(
   );
 }
 
+
+
+const Title = styled.input`
+  width:300px;
+  margin:1rem;
+  padding: 2px;
+  border: 1px solid khaki;
+  background: none;
+  font-family: inherit;
+  color:inherit;
+  font-size: 1.5rem;
+`;
+const Content = styled.textarea`
+  resize: none;
+  font-family: inherit;
+  color:inherit;
+  background: none;
+  border: 1px solid khaki;
+  margin:1rem;
+  padding: 5px;
+  width:300px;
+  height:100px;
+  font-size: 1.2rem;
+`;
 export function Editor (
   {headerTitle: title, data}:
   {headerTitle:string, data?: Diary}
 ) {
   const navigate = useNavigate();
   const date = data?.regDate ?? new Date();
-  const content = data?.content ?? '';
-  const [emotion, setEmotion] = useState<EmotionCode | undefined>(undefined);
-  
+  const [emotion, setEmotion] = useState<EmotionCode | undefined>(data?.emotion);
+  const {onCreate, onUpdate} = useContext(DiaryDispatchContext)!;
+
+  const diaryTitle = useRef<HTMLInputElement>(null);
+  const diaryContent = useRef<HTMLTextAreaElement>(null);
+
+  const handleSubmit = ()=>{
+    if(!diaryTitle.current || !diaryContent.current || !emotion){
+      return;
+    }
+    const submission:Diary = {
+      id: data?.id,
+      emotion: emotion,
+      title: diaryTitle.current.value,
+      content: diaryContent.current.value,
+      regDate: date,
+    }
+    if(!data){
+      onCreate(submission);
+      navigate('/diary');
+    }
+    else{
+      onUpdate(submission);
+      navigate('/diary/'+data?.id);
+    }
+    
+  }
+
   return (
     <>
     <Header title={title}
@@ -102,15 +137,20 @@ export function Editor (
       rightChild={
         <Button
           className="primary"
-          onClick={()=>navigate('/diary')}>
+          onClick={handleSubmit}>
             DONE
         </Button>
       }
     />
 
-    <div>
+    {!data && <div>
       date: {date.toLocaleDateString()}
-    </div>
+    </div>}
+    <Title type="title" name="title" id="title"
+      placeholder="Title" defaultValue={data?.title}
+      required
+      ref={diaryTitle}
+      />
     <EmotionSelector
       emotion={emotion}
       onSelect={setEmotion}
@@ -120,7 +160,9 @@ export function Editor (
       id="content"
       placeholder="Description..."
       autoFocus={true}
-      defaultValue={content}
+      defaultValue={data?.content}
+      ref={diaryContent}
+      required
     />
     </>
   );
