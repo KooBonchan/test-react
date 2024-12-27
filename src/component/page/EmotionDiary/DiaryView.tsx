@@ -5,6 +5,8 @@ import { useContext } from "react";
 import { DiaryStateContext } from "./context/DiaryContext";
 import { emotionMetadata } from "../../../model/Diary";
 
+
+
 export function DiaryView() {
   const {id:rawId} = useParams();
   const diary = useContext(DiaryStateContext);

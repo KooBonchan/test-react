@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { memo, useCallback, useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Diary, Emotion, EmotionCode, emotionMetadata } from "../../../../model/Diary";
@@ -25,10 +25,9 @@ const EmotionButtonWrapper = styled.div`
 const EmotionButtonLabel = styled.div`
   font-size: 1.2em;
 `;
-function EmotionButton (
+const EmotionButton = memo((
   {emotion:{filename,name}}:
-  {emotion: Emotion}){
-  return (
+  {emotion: Emotion}) => (
     <>
       <img
         src={'/icons/'+filename}
@@ -36,8 +35,8 @@ function EmotionButton (
         width='80px'/>
       <EmotionButtonLabel>{name}</EmotionButtonLabel>
     </>
-  );
-}
+  ));
+
 
 const EmotionButtonBar = styled.div`
   display: flex;
@@ -99,6 +98,7 @@ export function Editor (
   const [emotion, setEmotion] = useState<EmotionCode | undefined>(data?.emotion);
   const {onCreate, onUpdate} = useContext(DiaryDispatchContext)!;
 
+  const handleSelect = useCallback((emotion:EmotionCode)=>setEmotion(()=>emotion), []);
   const diaryTitle = useRef<HTMLInputElement>(null);
   const diaryContent = useRef<HTMLTextAreaElement>(null);
 
@@ -123,7 +123,6 @@ export function Editor (
       onUpdate(submission);
       navigate('/diary/'+data?.id);
     }
-    
   }
 
   return (
@@ -156,7 +155,7 @@ export function Editor (
       />
     <EmotionSelector
       emotion={emotion}
-      onSelect={setEmotion}
+      onSelect={handleSelect}
       />
     <Content
       name="content"

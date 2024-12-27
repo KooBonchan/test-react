@@ -38,7 +38,6 @@ export function DiaryListView() {
     setSort(object.value as unknown as SortBy);
   }
   
-  console.log(sortBy);
   return (
     <>
       <Header

@@ -18,10 +18,10 @@ const Title = styled.span`
 `;
 
 
-export function Header(
+const Header = (
   {leftChild, title='Emotion Diary', rightChild}:
   {leftChild: JSX.Element, title?:string, rightChild: JSX.Element}
-) {
+) => {
   return (
     <HeaderTemplate>
       {leftChild}
@@ -30,3 +30,5 @@ export function Header(
     </HeaderTemplate>
   );
 }
+
+export { Header };
