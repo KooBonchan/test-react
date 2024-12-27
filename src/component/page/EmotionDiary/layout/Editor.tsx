@@ -46,7 +46,7 @@ const EmotionButtonBar = styled.div`
   justify-content: center;
 `;
 function EmotionSelector(
-  {emotion: emotionCode, onSelect}:
+  {emotion: emotionCode = EmotionCode.UP, onSelect}:
   {emotion?: EmotionCode, onSelect: (emotion:EmotionCode) => void}
 ) {
   return (
@@ -103,14 +103,16 @@ export function Editor (
   const diaryContent = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = ()=>{
-    if(!diaryTitle.current || !diaryContent.current || !emotion){
+    if(!diaryTitle.current ||
+        diaryTitle.current.value.trim().length == 0 ||
+       !emotion){
       return;
     }
     const submission:Diary = {
       id: data?.id,
       emotion: emotion,
       title: diaryTitle.current.value,
-      content: diaryContent.current.value,
+      content: diaryContent?.current?.value,
       regDate: date,
     }
     if(!data){
@@ -148,6 +150,7 @@ export function Editor (
     </div>}
     <Title type="title" name="title" id="title"
       placeholder="Title" defaultValue={data?.title}
+      autoFocus={true}
       required
       ref={diaryTitle}
       />
@@ -159,10 +162,8 @@ export function Editor (
       name="content"
       id="content"
       placeholder="Description..."
-      autoFocus={true}
       defaultValue={data?.content}
       ref={diaryContent}
-      required
     />
     </>
   );

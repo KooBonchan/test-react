@@ -27,6 +27,6 @@ export interface Diary{
   id?: number;
   emotion: EmotionCode;
   title: string;
-  content: string;
+  content?: string;
   regDate: Date;
 }
